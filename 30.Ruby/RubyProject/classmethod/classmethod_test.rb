@@ -58,3 +58,16 @@ class HelloWorld4
 end
 
 HelloWorld1.hello("John3")
+
+#type5
+module ClassMethods
+  def cmethod
+    "class method"
+  end
+end
+
+class HelloWorld5
+  extend ClassMethods
+end
+
+puts HelloWorld5.cmethod
