@@ -37,35 +37,34 @@ end
 
 class UpdateFile
   
-  def initialize(oldFilesList, newFilesList, oldRootPath, newRootPath, backpath)
-    @oldPath = oldRootPath
-    @newPath = newRootPath
-    @backpath = backpath + "\\" + Time.now.strftime("%Y%m%d%H%M%S")
-    @oldFilesList = oldFilesList
-    @newFilesList = newFilesList
+  def initialize(destFilesList, srcFilesList, destRootPath, srcRootPath, backupPath)
+    @destRootPath = destRootPath
+    @srcRootPath = srcRootPath
+    @backupPath = backupPath + "\\" + Time.now.strftime("%Y%m%d%H%M%S")
+    @destFilesList = destFilesList
+    @srcFilesList = srcFilesList
   end
   
   def updateFile
-    @newFilesList.each do |newFile|
-      selected = @oldFilesList.select do |v|
-                   v.path[@oldPath.length...v.path.length] == newFile.path[@newPath.length...newFile.path.length] && v.fileName == newFile.fileName 
+    @srcFilesList.each do |srcFile|
+      selected = @destFilesList.select do |v|
+                   v.path[@destRootPath.length...v.path.length] == srcFile.path[@srcRootPath.length...srcFile.path.length] && v.fileName == srcFile.fileName 
                  end
       if selected!=nil && !selected.empty?
-        
-        if selected[0].updateTime < newFile.updateTime
-          path = @backpath + selected[0].path[@oldPath.length...selected[0].path.length]
-          createDirectory(path)
+        destFile = selected[0]
+        if destFile.updateTime < srcFile.updateTime
+          backupPath = @backupPath + destFile.path[@destRootPath.length...destFile.path.length]
+          createDirectory(backupPath)
           # back up
-          FileUtils.cp("#{selected[0].path}\\#{selected[0].fileName}", "#{path}\\#{selected[0].fileName}", :preserve => true)
+          FileUtils.cp("#{destFile.path}\\#{destFile.fileName}", "#{backupPath}\\#{destFile.fileName}", :preserve => true)
           # update
-          FileUtils.cp("#{newFile.path}\\#{newFile.fileName}", "#{selected[0].path}\\#{selected[0].fileName}", {:preserve => true, :verbose => true})
+          FileUtils.cp("#{srcFile.path}\\#{srcFile.fileName}", "#{destFile.path}\\#{destFile.fileName}", {:preserve => true})
         end
       else
-        
-        path = @oldPath + newFile.path[@newPath.length...newFile.path.length]
-        createDirectory(path)
+        destPath = @destRootPath + srcFile.path[@srcRootPath.length...srcFile.path.length]
+        createDirectory(destPath)
         # update
-        FileUtils.cp("#{newFile.path}\\#{newFile.fileName}", "#{path}\\#{newFile.fileName}", {:preserve => true, :verbose => true})
+        FileUtils.cp("#{srcFile.path}\\#{srcFile.fileName}", "#{destPath}\\#{srcFile.fileName}", {:preserve => true})
       end
     end
   end
@@ -83,18 +82,18 @@ end
 
 class UpdateVersion
   def self.main
-    oldRootPath = "F:\\test\\test_old"
-    newRootPath = "F:\\test\\test_new"
+    destRootPath = "F:\\test\\test_old"
+    srcRootPath = "F:\\test\\test_new"
     
-    oldDF = DirFile.new
-    oldDF.getDirFile(oldRootPath)
+    destDF = DirFile.new
+    destDF.getDirFile(destRootPath)
     
-    newDF = DirFile.new
-    newDF.getDirFile(newRootPath)
+    srcDF = DirFile.new
+    srcDF.getDirFile(srcRootPath)
     
-    backpath = "F:\\test"
+    backupPath = "F:\\test"
     
-    updateFile = UpdateFile.new(oldDF.filesList, newDF.filesList, oldRootPath, newRootPath, backpath)
+    updateFile = UpdateFile.new(destDF.filesList, srcDF.filesList, destRootPath, srcRootPath, backupPath)
     updateFile.updateFile
 
   end
