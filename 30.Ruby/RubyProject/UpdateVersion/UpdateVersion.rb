@@ -65,7 +65,7 @@ class UpdateFile
           # update
           FileUtils.cp("#{srcFile.path}\\#{srcFile.fileName}", "#{destFile.path}\\#{destFile.fileName}", {:preserve => true})
           
-          log = [count, destFile.path, backupPath, destFile.fileName, destFile.updateTime, srcFile.updateTime, "insert"]
+          log = [count, destFile.path, backupPath, destFile.fileName, destFile.updateTime, srcFile.updateTime, "M(modify)"]
           count = count + 1
           logList << log
           
@@ -76,7 +76,7 @@ class UpdateFile
         # update
         FileUtils.cp("#{srcFile.path}\\#{srcFile.fileName}", "#{destPath}\\#{srcFile.fileName}", {:preserve => true})
         
-        log = [count, destPath, nil, srcFile.fileName, nil, srcFile.updateTime, "update"]
+        log = [count, destPath, nil, srcFile.fileName, nil, srcFile.updateTime, "N(new)"]
         count = count + 1
         logList << log
       end
@@ -92,36 +92,53 @@ class UpdateFile
     end
   end
   
-  private :createDirectory
 end
 
 class UpdateVersion
-  def self.main
-    destRootPath = "F:\\test\\test_old"
-    srcRootPath = "F:\\test\\test_new"
+  
+  def self.main(destRootPath, srcRootPath, backupPath)
+    
+    dateTimeStr = Time.now.strftime("%Y%m%d%H%M%S")
+
+    puts "==Start :get entire files=="
     
     # get destination files
     destDF = DirFile.new
     destDF.getDirFile(destRootPath)
     
+    # get source files 
     srcDF = DirFile.new
     srcDF.getDirFile(srcRootPath)
     
-    backupPath = "F:\\test\\" + Time.now.strftime("%Y%m%d%H%M%S")
+    backupPath = "#{backupPath}\\#{dateTimeStr}"
     
-    # get source files 
+    puts "==End :get entire files=="
+    
+    puts "==Start :generate updateversion=="
+
+    # generate updateversion
     updateFile = UpdateFile.new(destDF.filesList, srcDF.filesList, destRootPath, srcRootPath, backupPath)
     logList = updateFile.updateFile
     
+    puts "==End :generate updateversion=="
+    
+    puts "==Start :output operation logs=="
     # output operation logs
-    CSV.open("#{backupPath}\\log.csv", "wb") do |csv|
+    updateFile.createDirectory(backupPath)
+    CSV.open("#{backupPath}\\log_#{dateTimeStr}.csv", "w") do |csv|
       csv << ["No", "Path", "Backup Path", "File Name", "Update Time(Old File)", "Update Time(New File)", "Operation Type"]
       logList.each do |item|
         csv << item  
       end
     end
 
+    puts "==End :output operation logs=="
+    
   end
 end
 
-UpdateVersion.main
+destRootPath = "F:\\test\\test_old"
+srcRootPath = "F:\\test\\test_new"
+backupPath = "F:\\test"
+    
+UpdateVersion.main(destRootPath, srcRootPath, backupPath)
