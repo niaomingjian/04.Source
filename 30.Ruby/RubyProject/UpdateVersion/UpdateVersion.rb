@@ -115,6 +115,7 @@ class UpdateVersion
     
     # output operation logs
     CSV.open("#{backupPath}\\log.csv", "wb") do |csv|
+      csv << ["No", "Path", "Backup Path", "File Name", "Update Time(Old File)", "Update Time(New File)", "Operation Type"]
       logList.each do |item|
         csv << item  
       end
