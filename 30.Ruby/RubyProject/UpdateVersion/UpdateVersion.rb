@@ -1,4 +1,5 @@
 require "fileutils"
+require "csv"
 
 class FileInfo
   attr_accessor  :path, :fileName, :ext, :updateTime
@@ -36,16 +37,18 @@ class DirFile
 end
 
 class UpdateFile
-  
+
   def initialize(destFilesList, srcFilesList, destRootPath, srcRootPath, backupPath)
     @destRootPath = destRootPath
     @srcRootPath = srcRootPath
-    @backupPath = backupPath + "\\" + Time.now.strftime("%Y%m%d%H%M%S")
+    @backupPath = backupPath
     @destFilesList = destFilesList
     @srcFilesList = srcFilesList
   end
   
   def updateFile
+    count = 1
+    logList = []
     @srcFilesList.each do |srcFile|
       selected = @destFilesList.select do |v|
                    v.path[@destRootPath.length...v.path.length] == srcFile.path[@srcRootPath.length...srcFile.path.length] && v.fileName == srcFile.fileName 
@@ -53,20 +56,32 @@ class UpdateFile
       if selected!=nil && !selected.empty?
         destFile = selected[0]
         if destFile.updateTime < srcFile.updateTime
-          backupPath = @backupPath + destFile.path[@destRootPath.length...destFile.path.length]
+          
+          backupPath = @backupPath + destFile.path[File.dirname(@destRootPath).length...destFile.path.length]
+          
           createDirectory(backupPath)
           # back up
           FileUtils.cp("#{destFile.path}\\#{destFile.fileName}", "#{backupPath}\\#{destFile.fileName}", :preserve => true)
           # update
           FileUtils.cp("#{srcFile.path}\\#{srcFile.fileName}", "#{destFile.path}\\#{destFile.fileName}", {:preserve => true})
+          
+          log = [count, destFile.path, backupPath, destFile.fileName, destFile.updateTime, srcFile.updateTime, "insert"]
+          count = count + 1
+          logList << log
+          
         end
       else
         destPath = @destRootPath + srcFile.path[@srcRootPath.length...srcFile.path.length]
         createDirectory(destPath)
         # update
         FileUtils.cp("#{srcFile.path}\\#{srcFile.fileName}", "#{destPath}\\#{srcFile.fileName}", {:preserve => true})
+        
+        log = [count, destPath, nil, srcFile.fileName, nil, srcFile.updateTime, "update"]
+        count = count + 1
+        logList << log
       end
     end
+    logList
   end
   
   def createDirectory(path)
@@ -85,24 +100,27 @@ class UpdateVersion
     destRootPath = "F:\\test\\test_old"
     srcRootPath = "F:\\test\\test_new"
     
+    # get destination files
     destDF = DirFile.new
     destDF.getDirFile(destRootPath)
     
     srcDF = DirFile.new
     srcDF.getDirFile(srcRootPath)
     
-    backupPath = "F:\\test"
+    backupPath = "F:\\test\\" + Time.now.strftime("%Y%m%d%H%M%S")
     
+    # get source files 
     updateFile = UpdateFile.new(destDF.filesList, srcDF.filesList, destRootPath, srcRootPath, backupPath)
-    updateFile.updateFile
+    logList = updateFile.updateFile
+    
+    # output operation logs
+    CSV.open("#{backupPath}\\log.csv", "wb") do |csv|
+      logList.each do |item|
+        csv << item  
+      end
+    end
 
   end
 end
 
 UpdateVersion.main
-
-
-
-
-
-
