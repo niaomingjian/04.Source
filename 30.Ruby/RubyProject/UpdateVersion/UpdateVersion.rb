@@ -98,9 +98,10 @@ class UpdateVersion
   
   def self.main(destRootPath, srcRootPath, backupPath)
     
+    time_S = Time.now
     dateTimeStr = Time.now.strftime("%Y%m%d%H%M%S")
 
-    puts "==Start :get entire files=="
+    puts "①.Start :get entire files=>>>>>"
     
     # get destination files
     destDF = DirFile.new
@@ -112,17 +113,17 @@ class UpdateVersion
     
     backupPath = "#{backupPath}\\#{dateTimeStr}"
     
-    puts "==End :get entire files=="
+    puts "<<<<<=End :get entire files", "\n"
     
-    puts "==Start :generate updateversion=="
+    puts "②.Start :generate updateversion=>>>>>"
 
     # generate updateversion
     updateFile = UpdateFile.new(destDF.filesList, srcDF.filesList, destRootPath, srcRootPath, backupPath)
     logList = updateFile.updateFile
     
-    puts "==End :generate updateversion=="
+    puts "<<<<<=End :generate updateversion", "\n"
     
-    puts "==Start :output operation logs=="
+    puts "③.Start :output operation logs=>>>>>"
     # output operation logs
     updateFile.createDirectory(backupPath)
     CSV.open("#{backupPath}\\log_#{dateTimeStr}.csv", "w") do |csv|
@@ -132,7 +133,11 @@ class UpdateVersion
       end
     end
 
-    puts "==End :output operation logs=="
+    puts "<<<<<=End :output operation logs", "\n"
+    
+    time_E = Time.now
+    
+    puts "Completed. Elapse #{time_E - time_S} s" 
     
   end
 end
