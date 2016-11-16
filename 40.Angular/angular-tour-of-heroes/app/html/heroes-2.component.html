@@ -1,0 +1,24 @@
+<h2>My Heros</h2>
+<div class = "container">
+<div class="bl-list-header">
+    <label class="guide-title-code-column">ID</label>
+    <label class="guide-title-name-column">NAME</label>
+</div>
+<div class = "body-container">
+    <ul class = "heroes">
+        <li *ngFor = "let hero of heroes" (click)="onSelect(hero)" class="bl-list-item" [class.bl-list-item-checked]="hero === selectedHero">
+            <div class="guide-label">
+                <span style="width:50px" [class.fa-check]="hero === selectedHero" [class.li-fa-check]="hero === selectedHero"></span>
+                <div class="guide-code-column">{{hero.id}}</div>
+                <div class="guide-name-column">{{hero.name}}</div>
+            </div>
+        </li>
+    </ul>
+</div>
+</div>
+<div *ngIf="selectedHero">
+<h2>
+{{selectedHero.name | uppercase}} is my hero
+</h2>
+<button (click)="gotoDetail()">View Details</button>
+</div>

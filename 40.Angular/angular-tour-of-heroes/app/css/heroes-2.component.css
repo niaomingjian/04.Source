@@ -1,0 +1,92 @@
+.bl-list-header {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid #AAAAAA;
+    border-bottom: none;
+    padding: 8px 10px;
+    background-color: #009240;
+    color: #FFFFFF;
+  }
+
+  .item-label {
+      padding: 8px 12px;
+  }
+
+  .bl-list-item {
+    position: relative;
+    padding: 0;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid #AAAAAA;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(170, 170, 170);
+  }
+
+  .guide-title-code-column {
+    padding-left: 42px;
+    width: 162px;
+    margin-bottom: 0;
+  }
+  .guide-title-name-column {
+    padding-left: 20px;
+    margin-bottom: 0;
+  }
+
+  .body-container {
+    overflow-y: auto;
+    height: 300px;
+  }
+
+  .body-container ul {
+      border: 1px solid #AAAAAA;
+  }
+  .container {
+    width: 500px;
+  }
+
+  .heroes li.bl-list-item-checked{
+    background-color: #b2daa2;
+    border: 2px solid #00bfff;
+  }
+
+  .heroes li.bl-list-item-checked:hover {
+    background-color: #b2daa2;
+    color: white;
+  }
+
+  .li-fa-check{
+    font: normal normal normal 14px/1 FontAwesome;
+    text-rendering: auto;
+  }
+
+  .heroes {
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  .heroes li:hover {
+    color: #607D8B;
+    background-color: #DDD;
+  }
+  .heroes .text {
+    position: relative;
+    top: -3px;
+  }
+
+  .guide-label {
+    display: flex;
+    padding: 8px 12px;
+  }
+
+  .guide-code-column {
+    padding-left: 12px;
+    width: 152px;
+  }
+
+  .guide-name-column {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 380px;
+  }
