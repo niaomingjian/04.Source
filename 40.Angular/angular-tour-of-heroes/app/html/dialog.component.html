@@ -1,0 +1,15 @@
+<div [@dialog] *ngIf="visible" class="dialog">
+<div class="modal-header">
+	<div class="modal-header__left"></div>
+	<div class="modal-header__center">作業区分ガイド</div>
+	<div class="modal-header__right">
+		<div class="modal-hide-button">
+			
+			<button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">×</button>
+		</div>
+	</div>
+</div>
+  <ng-content></ng-content>
+  
+</div>
+<div *ngIf="visible" class="overlay"></div>

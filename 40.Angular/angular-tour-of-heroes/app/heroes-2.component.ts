@@ -13,10 +13,7 @@ import { HeroService } from './hero.service';
 })
 export class HeroesComponent_2 { 
 
-  hero: Hero = {
-    id: 1,
-    name: 'windstorm'
-  };
+  hero: Hero;
   heroes: Hero[];
   selectedHero: Hero;
   

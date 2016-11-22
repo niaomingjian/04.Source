@@ -10,30 +10,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var hero_service_1 = require('./hero.service');
-var DashboardComponent = (function () {
-    function DashboardComponent(heroService) {
+var SearchComponent = (function () {
+    function SearchComponent(heroService) {
         this.heroService = heroService;
         this.heroes = [];
         this.showDialog = false;
     }
-    DashboardComponent.prototype.ngOnInit = function () {
+    SearchComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.heroService.getHeroes()
             .then(function (heroes) { return _this.heroes = heroes; });
     };
-    DashboardComponent.prototype.onSelect = function (hero) {
+    SearchComponent.prototype.onSelect = function (hero) {
         this.selectedHero = hero;
     };
-    DashboardComponent = __decorate([
+    SearchComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: 'my-dashboard',
-            templateUrl: 'html/dashboard.component.html',
-            styleUrls: ['css/dashboard.component.css']
+            selector: 'my-search',
+            templateUrl: 'html/search.component.html',
+            styleUrls: ['css/search.component.css']
         }), 
         __metadata('design:paramtypes', [hero_service_1.HeroService])
-    ], DashboardComponent);
-    return DashboardComponent;
+    ], SearchComponent);
+    return SearchComponent;
 }());
-exports.DashboardComponent = DashboardComponent;
-//# sourceMappingURL=dashboard.component.js.map
+exports.SearchComponent = SearchComponent;
+//# sourceMappingURL=search.component.js.map

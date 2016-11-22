@@ -5,11 +5,12 @@ import { HeroService } from './hero.service';
 
 @Component({
     moduleId: module.id,
-    selector: 'my-dashboard',
-    templateUrl: 'html/dashboard.component.html',
-    styleUrls: [ 'css/dashboard.component.css' ]
+    selector: 'my-search',
+    templateUrl: 'html/search.component.html',
+    styleUrls: [ 'css/search.component.css' ]
 })
-export class DashboardComponent {
+
+export class SearchComponent {
     heroes: Hero[] = [];
     selectedHero: Hero;
 

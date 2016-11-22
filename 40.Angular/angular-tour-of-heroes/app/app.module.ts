@@ -1,6 +1,6 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import { RouterModule }   from '@angular/router';
 
 import { HttpModule }    from '@angular/http';
@@ -15,6 +15,8 @@ import { HeroDetailComponent } from './hero-detail.component';
 import { DashboardComponent } from './dashboard.component';
 import { HeroSearchComponent } from './hero-search.component';
 import { HeroFormComponent } from './hero-form.component';
+import { DialogComponent } from './dialog.component';
+import { SearchComponent } from './search.component';
 
 import { HeroService } from './hero.service';
 
@@ -38,7 +40,9 @@ import './rxjs-extensions';
     HeroDetailComponent,
     DashboardComponent,
     HeroSearchComponent,
-    HeroFormComponent
+    HeroFormComponent,
+    DialogComponent,
+    SearchComponent
   ],
 
   providers: [

@@ -15,10 +15,6 @@ var HeroesComponent_2 = (function () {
     function HeroesComponent_2(router, heroService) {
         this.router = router;
         this.heroService = heroService;
-        this.hero = {
-            id: 1,
-            name: 'windstorm'
-        };
     }
     HeroesComponent_2.prototype.onSelect = function (hero) {
         this.selectedHero = hero;

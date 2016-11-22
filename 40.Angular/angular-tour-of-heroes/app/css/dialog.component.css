@@ -1,0 +1,99 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.dialog {
+  z-index: 1000;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 200px;
+  width: 90%;
+  max-width: 800px;
+  background-color: #fff;
+  padding: 0;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 768px) {
+  .dialog {
+    top: 40px;
+  }
+}
+
+.dialog__close-btn {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2em;
+}
+
+.modal-header__left {
+    flex: 1 1 0px;
+    padding: 4px;
+    text-align: left;
+}
+
+.modal-header__center {
+    line-height: 42px;
+    font-weight: bold;
+    flex: 1 1 0px;
+    padding: 4px;
+    letter-spacing: 0.2em;
+    text-align: center;
+}
+
+.modal-header__right {
+    flex: 1 1 0px;
+    padding: 4px;
+    text-align: right;
+}
+
+
+
+.modal-header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 2px 2px 0 0;
+    border-bottom: 1px solid #E5E5E5;
+    background-color: #FFF;
+}
+
+.modal-body {
+    width: 100%;
+    background-color: #FFF;
+    overflow: hidden;
+    flex: 1 1 0px;
+    position: relative;
+    padding: 15px;
+}
+
+.dialog__close-btn {
+    display: flex;
+    flex-direction: row;
+    width: inherit;
+    height: inherit;
+    justify-content: center;
+    align-items: center;
+    color: #555;
+    font-size: 28px;
+    font-weight: 700;
+}

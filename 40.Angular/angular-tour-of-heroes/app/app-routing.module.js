@@ -15,10 +15,12 @@ var heroes_component_1 = require('./heroes.component');
 var heroes_2_component_1 = require('./heroes-2.component');
 var hero_detail_component_1 = require('./hero-detail.component');
 var hero_form_component_1 = require('./hero-form.component');
+var search_component_1 = require('./search.component');
 var routes = [
     { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: dashboard_component_1.DashboardComponent },
     { path: 'detail/:id', component: hero_detail_component_1.HeroDetailComponent },
+    { path: 'search', component: search_component_1.SearchComponent },
     { path: 'heroes', component: heroes_component_1.HeroesComponent },
     { path: 'heroes-2', component: heroes_2_component_1.HeroesComponent_2 },
     { path: 'heroform', component: hero_form_component_1.HeroFormComponent }

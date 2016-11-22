@@ -10,8 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var hero_1 = require('./hero');
+var hero_service_1 = require('./hero.service');
 var HeroFormComponent = (function () {
-    function HeroFormComponent() {
+    function HeroFormComponent(heroService) {
+        this.heroService = heroService;
         this.powers = ['Really Smart', 'Super Flexible',
             'Super Hot', 'Weather Changer'];
         this.model = new hero_1.Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
@@ -19,7 +21,10 @@ var HeroFormComponent = (function () {
         this.active = true;
     }
     HeroFormComponent.prototype.onSubmit = function () {
+        var _this = this;
         this.submitted = true;
+        this.heroService.createFromHero(this.model)
+            .then(function (hero) { return _this.model = hero; });
     };
     HeroFormComponent.prototype.newHero = function () {
         var _this = this;
@@ -34,7 +39,7 @@ var HeroFormComponent = (function () {
             templateUrl: 'html/hero-form.component.html',
             styleUrls: ['css/hero-form.component.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [hero_service_1.HeroService])
     ], HeroFormComponent);
     return HeroFormComponent;
 }());

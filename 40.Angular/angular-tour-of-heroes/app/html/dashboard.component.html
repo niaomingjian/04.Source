@@ -7,3 +7,39 @@
   </a>
 </div>
 <hero-search></hero-search>
+
+<div>
+  <button (click)="showDialog = !showDialog" class="btn">Open</button>
+</div>
+
+<div *ngIf="selectedHero && showDialog == false">
+  <div>作業区分コード:{{selectedHero.id}}</div>
+  <div>作業区分名称:{{selectedHero.name}}</div>
+</div>
+
+<my-dialog [(visible)]="showDialog">
+  <div class="bl-balloon-title">作業区分を選択してください。</div>
+
+  <div class = "container">
+  <div class="bl-list-header">
+      <label class="guide-title-code-column">作業区分コード</label>
+      <label class="guide-title-name-column">作業区分名称</label>
+  </div>
+  <div class = "body-container">
+      <ul class = "heroes">
+          <li *ngFor = "let hero of heroes" (click)="onSelect(hero)" class="bl-list-item" [class.bl-list-item-checked]="hero === selectedHero">
+              <div class="guide-label">
+                  <span style="width:50px" [class.fa-check]="hero === selectedHero" [class.li-fa-check]="hero === selectedHero"></span>
+                  <div class="guide-code-column">{{hero.id}}</div>
+                  <div class="guide-name-column">{{hero.name}}</div>
+              </div>
+          </li>
+      </ul>
+  </div>
+  </div>
+  
+  <div class="modal-layout-footer">
+    <button (click)="showDialog = !showDialog" class="bl-btn-panel">確認</button>
+  </div>
+</my-dialog>
+

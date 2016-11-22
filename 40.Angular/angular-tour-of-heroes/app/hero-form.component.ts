@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Hero }    from './hero';
 
+import { HeroService } from './hero.service';
+
 @Component({
   moduleId: module.id,
   selector: 'hero-form',
@@ -12,10 +14,16 @@ export class HeroFormComponent {
         'Super Hot', 'Weather Changer'];
     
     model = new Hero(18, 'Dr IQ', this.powers[0], 'Chuck Overstreet');
+
     submitted = false;
     active = true;
+
+    constructor(private heroService: HeroService){}
+
     onSubmit() { 
-        this.submitted = true; 
+        this.submitted = true;
+        this.heroService.createFromHero(this.model)
+        .then(hero => this.model = hero);
     }
 
     newHero() {
